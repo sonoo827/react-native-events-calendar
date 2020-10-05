@@ -125,9 +125,9 @@ export default class DayView extends React.PureComponent {
     const { packedEvents } = this.state
     let events = packedEvents.map((event, i) => {
       const style = {
-        left: event.left,
+        left: 30*i,
         height: event.height,
-        width: event.width,
+        width: 30,
         top: event.top
       }
 
@@ -164,11 +164,11 @@ export default class DayView extends React.PureComponent {
     })
 
     return (
-      <View>
-        <View style={{ marginLeft: LEFT_MARGIN }}>
-          {events}
-        </View>
-      </View>
+      <View style={{flexDirection:'row'}}>
+      <View style={{flex:1, marginLeft: LEFT_MARGIN }}>{events}</View>
+      <View style={{ flex:1,marginLeft:10 }}>{events}</View>
+      <View style={{ flex:1,marginLeft: 10 }}>{events}</View>
+    </View>
     )
   }
 
