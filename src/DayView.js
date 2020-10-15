@@ -12,7 +12,7 @@ const CALENDER_HEIGHT = 2400;
 const TEXT_LINE_HEIGHT = 17;
 // const MIN_EVENT_TITLE_WIDTH = 20
 // const EVENT_PADDING_LEFT = 4
-let { width } = Dimensions.get('window')
+let { width,height } = Dimensions.get('window')
 function range(from, to) {
   return Array.from(Array(to), (_, i) => from + i);
 }
@@ -201,7 +201,7 @@ export default class DayView extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.scrollToFirst && this.scrollToFirst();
+     this.scrollToFirst();
   }
 
   scrollToFirst() {
@@ -222,19 +222,91 @@ export default class DayView extends React.PureComponent {
     const { width, styles } = this.props;
     const timeNowHour = moment().hour();
     const timeNowMin = moment().minutes();
+
+
+this.setState({
+  _scrollY:(offset * (timeNowHour - this.props.start) +
+  (offset * timeNowMin) / 60)-150
+},()=>{
+ // this.scrollToFirst();
+})
+    
+
     return (
-      <View
+     <View
         key={`timeNow`}
         style={[
           styles.lineNow,
           {
+            height:2,
             top:
               offset * (timeNowHour - this.props.start) +
               (offset * timeNowMin) / 60,
-            width: width - 20,
+            width: width - 2,
           },
         ]}
       />
+
+     
+    );
+  }
+
+  _renderCurrentTimeLabels() {
+    const offset = 100;
+    const { format24h } = this.props;
+    const { width, styles } = this.props;
+    const timeNowHour = moment().hour();
+    const timeNowMin = moment().minutes();
+
+
+    let timeText;
+    let ampmText;
+     if (timeNowHour < 12) {
+      timeText = !format24h ? `${timeNowHour}` : timeNowHour;
+      ampmText='AM';
+      
+    } else if (timeNowHour === 12) {
+      timeText = !format24h ? `${timeNowHour}` : timeNowHour;
+      ampmText='PM';
+    } else if (timeNowHour === 24) {
+      timeText = !format24h ? `12` : 0;
+      ampmText='AM';
+    } else {
+      timeText = !format24h ? `${timeNowHour - 12}` : timeNowHour;
+      ampmText='PM';
+    }
+    return (
+     
+        
+
+<View
+        key={`timeNow`}
+        style={[
+        
+          {
+            borderColor:'red',
+            borderRadius:10,
+            marginLeft:5,
+            borderWidth:1,
+            alignItems:'center',
+   
+            top:
+              (offset * (timeNowHour - this.props.start) +
+              (offset * timeNowMin) / 60)-8,
+            width:  48,
+          },
+        ]}
+      >
+<Text
+          key={`timeLabel`}
+          style={{ 
+          
+            color: 'red',
+            fontSize: 10,}}
+        >
+          {timeText+":"+timeNowMin+" "+ampmText}
+        </Text>
+      </View>
     );
   }
 
@@ -302,7 +374,7 @@ export default class DayView extends React.PureComponent {
   _getEvents(stylistsID) {
     const { styles } = this.props;
     const { packedEvents, stylists } = this.state;
-
+   
     var list = packedEvents.filter((item) => {
       return stylistsID == item.resourceId
     })
@@ -314,9 +386,6 @@ export default class DayView extends React.PureComponent {
     // let stylistEvents = populateEvents(list, itemWidth, this.props.start);
 
     let events = stylistEvents.map((event, i) => {
-
-
-
       const style = {
         left: event.left,
         height: event.height,
@@ -440,6 +509,9 @@ export default class DayView extends React.PureComponent {
   }
 
   _getBlankEvents(stylistsID,stylists_name) {
+
+  
+
     const { styles } = this.props;
     const { packedEvents, stylists } = this.state;
       let list_blank = this.state.blankEvents.map((elem) => {
@@ -508,6 +580,8 @@ export default class DayView extends React.PureComponent {
 
     });
 
+   
+
     return events;
   }
   _renderBlankEvents() {
@@ -537,11 +611,12 @@ export default class DayView extends React.PureComponent {
           { width: this.props.width },
         ]}
       >
-       {this._renderBlankEvents()}
+       {/* {this._renderBlankEvents()} */}
         {this._renderLines()}
         {this._renderEvents()}
         {this._renderRedLine()}
-
+        {this._renderCurrentTimeLabels()}
+        
         
       </ScrollView>
     );

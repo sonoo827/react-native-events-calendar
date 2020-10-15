@@ -14,6 +14,7 @@ import styleConstructor from './style';
 
 import DayView from './DayView';
 const LEFT_MARGIN = 50 - 1;
+
 var indexss = '';
 export default class EventCalendar extends React.Component {
   constructor(props) {
@@ -94,37 +95,111 @@ export default class EventCalendar extends React.Component {
       );
 
     let headerText = upperCaseHeader
-      ? date.format(formatHeader || 'DD MMMM YYYY').toUpperCase()
-      : date.format(formatHeader || 'DD MMMM YYYY');
+      ? date.format(  'DD-MM-YYYY').toUpperCase()
+      : date.format( 'DD-MM-YYYY');
+      var arrayOfWeekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+      var dateObj = new Date(date)
+      var weekdayNumber = dateObj.getDay()
+      var weekdayName = arrayOfWeekdays[weekdayNumber]
     // alert(headerText)
     return (
       <View style={[this.styles.container, { width }]}>
         <View style={this.styles.header}>
+        <TouchableOpacity
+      
+      onPress={() =>{
+     var initDate=   moment(this.props.initDate)
+        .format('YYYY-MM-DD')
+      var currntdate=moment(new Date).format('YYYY-MM-DD');
+      //  this.props.onTodayTapped(date)
+      if (initDate == currntdate) {
+        this.refs.calendar.scrollToIndex({index: this.props.size, animated: true})
+       
+      }else{
+        this.props.onTodayTapped(date)
+
+       
+      }
+
+      
+     
+     }}
+          >
+            <Text style={this.styles.headerText}>{"Today"}</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={this.styles.arrowButton}
             onPress={this._previous}
           >
             {leftIcon}
           </TouchableOpacity>
+          <TouchableOpacity
+          style={this.styles.headerTextContainer}
+            onPress={() =>{
+               this.props.onDateTapped(headerText)
 
-          <View style={this.styles.headerTextContainer}>
-            <Text style={this.styles.headerText}>{headerText}</Text>
+             // this._goToDate('2020-12-30')
+            }}
+       
+          >
+          <View >
+            <Text style={this.styles.headerText}>{weekdayName+" "+headerText}</Text>
           </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={this.styles.arrowButton}
+
             onPress={this._next}
+        
           >
             {rightIcon}
           </TouchableOpacity>
+
+
         </View>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row',height:25,marginTop:10 }}>
 
           {stylists.map((item, i) => (
 
-            <View style={{ flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0 }}>
-              <Text style={[this.styles.headerText, { fontSize: 13, textAlign: 'center', paddingTop: 5, paddingBottom: 2 }]}
-                numberOfLines={2}
-              >{item.title}</Text>
+            <View style={{ height:25,flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0,flexDirection:'row', }}>
+              {/* <Text style={[this.styles.headerText, { fontSize: 11, textAlign: 'center', paddingTop: 5, paddingBottom: 2,borderColor:'black',borderRadius:10,borderWidth:1 }]}
+                numberOfLines={1}
+              >{item.title}</Text> */}
+
+
+<View
+        key={`timeNow`}
+        style={[
+        
+          {
+            flex:1,
+            height:20,
+            borderColor:'#70757A',
+            borderRadius:10,
+            marginHorizontal:2,
+            borderWidth:1,
+            alignItems:'center',
+   
+         
+            width:  45,
+          },
+        ]}
+      >
+<Text
+          key={`timeLabel`}
+          numberOfLines={1}
+          style={{ 
+         
+            color: 'black',
+            fontSize: 11,}}
+        >
+          {item.title}
+        </Text>
+      </View>
+
+{/* <View style={{ height:35,borderRightWidth:1,borderColor:"#70757A" }}></View> */}
             </View>
           ))}
 
@@ -184,6 +259,7 @@ export default class EventCalendar extends React.Component {
     }
 
   };
+ 
 
   _next = () => {
     this._goToPage(this.state.index + 1);
@@ -210,9 +286,12 @@ export default class EventCalendar extends React.Component {
     return (
       <View style={[this.styles.container, { width }]}>
         <VirtualizedList
+      
           ref="calendar"
-          windowSize={1}
-          initialNumToRender={1}
+         
+          showsHorizontalScrollIndicator={true}
+          windowSize={2}
+          initialNumToRender={2}
           initialScrollIndex={this.props.size}
           data={events}
           getItemCount={() => this.props.size * 2}
@@ -223,9 +302,7 @@ export default class EventCalendar extends React.Component {
           pagingEnabled
           renderItem={this._renderItem.bind(this)}
           style={{ width: width }}
-
           onMomentumScrollEnd={event => {
-
             const index = parseInt(event.nativeEvent.contentOffset.x / width);
             const date = moment(this.props.initDate).add(
               index - this.props.size,

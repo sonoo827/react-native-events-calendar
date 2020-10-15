@@ -17,22 +17,22 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       ...theme.contentStyle,
     },
     header: {
-      paddingHorizontal: 30,
+   
       height: 50,
-      borderTopWidth: 1,
+      borderTopWidth: 0,
       borderBottomWidth: 1,
       borderColor: '#E6E8F0',
       backgroundColor: '#F5F5F6',
       flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'stretch',
+      justifyContent: 'center',
+      alignItems: 'center',
       ...theme.header,
     },
     headerTextContainer: {
       justifyContent: 'center',
     },
     headerText: {
-      fontSize: 16,
+      fontSize: 13,
       ...theme.headerText,
     },
     arrow: {
@@ -41,7 +41,7 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       resizeMode: 'contain',
     },
     arrowButton: {
-      width: 50,
+      width: 30,
       alignItems: 'center',
       justifyContent: 'center',
       ...theme.arrowButton,
@@ -112,7 +112,7 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       position: 'absolute',
       left: leftMargin,
       backgroundColor: 'red',
-      ...theme.lineNow,
+
     },
     timeLabel: {
       position: 'absolute',
