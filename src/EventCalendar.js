@@ -95,38 +95,46 @@ export default class EventCalendar extends React.Component {
       );
 
     let headerText = upperCaseHeader
-      ? date.format(  'DD-MM-YYYY').toUpperCase()
-      : date.format( 'DD-MM-YYYY');
-      var arrayOfWeekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      ? date.format('DD-MM-YYYY').toUpperCase()
+      : date.format('DD-MM-YYYY');
+    var arrayOfWeekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
-      var dateObj = new Date(date)
-      var weekdayNumber = dateObj.getDay()
-      var weekdayName = arrayOfWeekdays[weekdayNumber]
+    var dateObj = new Date(date)
+    var weekdayNumber = dateObj.getDay()
+    var weekdayName = arrayOfWeekdays[weekdayNumber]
     // alert(headerText)
     return (
       <View style={[this.styles.container, { width }]}>
         <View style={this.styles.header}>
-        <TouchableOpacity
-      
-      onPress={() =>{
-     var initDate=   moment(this.props.initDate)
-        .format('YYYY-MM-DD')
-      var currntdate=moment(new Date).format('YYYY-MM-DD');
-      //  this.props.onTodayTapped(date)
-      if (initDate == currntdate) {
-        this.refs.calendar.scrollToIndex({index: this.props.size, animated: true})
-       
-      }else{
-        this.props.onTodayTapped(date)
+          <TouchableOpacity
 
-       
-      }
+style={{  borderColor:'#70757A',
+borderRadius:10,
+marginRight:2,
+paddingHorizontal:5,
+paddingVertical:1,
+borderWidth:1,
+alignItems:'center',}}
+            onPress={() => {
 
-      
-     
-     }}
+              var initDate = moment(this.props.initDate)
+                .format('YYYY-MM-DD')
+              var currntdate = moment(new Date).format('YYYY-MM-DD');
+              //  this.props.onTodayTapped(date)
+              if (initDate == currntdate) {
+                this.refs.calendar.scrollToIndex({ index: this.props.size, animated: true })
+
+              } else {
+                this.props.onTodayTapped(date)
+
+
+              }
+
+
+
+            }}
           >
-            <Text style={this.styles.headerText}>{"Today"}</Text>
+            <Text style={this.styles.headertodayText}>{"Today"}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -136,70 +144,70 @@ export default class EventCalendar extends React.Component {
             {leftIcon}
           </TouchableOpacity>
           <TouchableOpacity
-          style={this.styles.headerTextContainer}
-            onPress={() =>{
-               this.props.onDateTapped(headerText)
+            style={this.styles.headerTextContainer}
+            onPress={() => {
+              this.props.onDateTapped(headerText)
 
-             // this._goToDate('2020-12-30')
+              // this._goToDate('2020-12-30')
             }}
-       
+
           >
-          <View >
-            <Text style={this.styles.headerText}>{weekdayName+" "+headerText}</Text>
-          </View>
+            <View >
+              <Text style={this.styles.headerText}>{weekdayName + " " + headerText}</Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity
             style={this.styles.arrowButton}
 
             onPress={this._next}
-        
+
           >
             {rightIcon}
           </TouchableOpacity>
 
 
         </View>
-        <View style={{ flexDirection: 'row',height:25,marginTop:10 }}>
+        <View style={{ flexDirection: 'row', height: 25, marginTop: 10 }}>
 
           {stylists.map((item, i) => (
 
-            <View style={{ height:25,flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0,flexDirection:'row', }}>
+            <View style={{ height: 25, flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0, flexDirection: 'row', }}>
               {/* <Text style={[this.styles.headerText, { fontSize: 11, textAlign: 'center', paddingTop: 5, paddingBottom: 2,borderColor:'black',borderRadius:10,borderWidth:1 }]}
                 numberOfLines={1}
               >{item.title}</Text> */}
 
 
-<View
-        key={`timeNow`}
-        style={[
-        
-          {
-            flex:1,
-            height:20,
-            borderColor:'#70757A',
-            borderRadius:10,
-            marginHorizontal:2,
-            borderWidth:1,
-            alignItems:'center',
-   
-         
-            width:  45,
-          },
-        ]}
-      >
-<Text
-          key={`timeLabel`}
-          numberOfLines={1}
-          style={{ 
-         
-            color: 'black',
-            fontSize: 11,}}
-        >
-          {item.title}
-        </Text>
-      </View>
+              <View
+                key={`timeNow`}
+                style={[
 
-{/* <View style={{ height:35,borderRightWidth:1,borderColor:"#70757A" }}></View> */}
+                  {
+                    flex: 1,
+                    height: 20,
+                    borderColor: '#70757A',
+                    borderRadius: 10,
+                    marginHorizontal: 2,
+                    borderWidth: 1,
+                    alignItems: 'center',
+
+                    width: 45,
+                  },
+                ]}
+              >
+                <Text
+                  key={`timeLabel`}
+                  numberOfLines={1}
+                  style={{
+
+                    color: 'black',
+                    fontSize: 11,
+                  }}
+                >
+                  {item.title}
+                </Text>
+              </View>
+
+              {/* <View style={{ height:35,borderRightWidth:1,borderColor:"#70757A" }}></View> */}
             </View>
           ))}
 
@@ -259,7 +267,7 @@ export default class EventCalendar extends React.Component {
     }
 
   };
- 
+
 
   _next = () => {
     this._goToPage(this.state.index + 1);
@@ -286,9 +294,9 @@ export default class EventCalendar extends React.Component {
     return (
       <View style={[this.styles.container, { width }]}>
         <VirtualizedList
-      
+
           ref="calendar"
-         
+
           showsHorizontalScrollIndicator={true}
           windowSize={2}
           initialNumToRender={2}

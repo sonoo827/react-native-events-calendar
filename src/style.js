@@ -22,7 +22,7 @@ export default function styleConstructor(theme = {}, calendarHeight) {
       borderTopWidth: 0,
       borderBottomWidth: 1,
       borderColor: '#E6E8F0',
-      backgroundColor: '#F5F5F6',
+      backgroundColor: 'white',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
@@ -33,6 +33,11 @@ export default function styleConstructor(theme = {}, calendarHeight) {
     },
     headerText: {
       fontSize: 13,
+      ...theme.headerText,
+    },
+    headertodayText: {
+      fontSize: 13,
+      fontWeight:'500',
       ...theme.headerText,
     },
     arrow: {
@@ -82,19 +87,20 @@ export default function styleConstructor(theme = {}, calendarHeight) {
     },
     eventTitle: {
       color: '#615B73',
-      fontWeight: '600',
+      fontWeight: '500',
+      fontSize:13,
       minHeight: 15,
       ...theme.eventTitle,
     },
     eventSummary: {
       color: '#615B73',
-      fontSize: 12,
+      fontSize: 11,
       flexWrap: 'wrap',
       ...theme.eventSummary,
     },
     eventTimes: {
       marginTop: 3,
-      fontSize: 10,
+      fontSize: 9,
       fontWeight: 'bold',
       color: '#615B73',
       flexWrap: 'wrap',

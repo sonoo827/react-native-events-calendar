@@ -238,11 +238,12 @@ this.setState({
         style={[
           styles.lineNow,
           {
+            marginLeft:5,
             height:2,
             top:
               offset * (timeNowHour - this.props.start) +
               (offset * timeNowMin) / 60,
-            width: width - 2,
+            width: width - 20,
           },
         ]}
       />
@@ -394,8 +395,20 @@ this.setState({
         top: event.top,
       };
 
+
+      bookStatusColors = {
+        ShowColorUpcoming: "#42A5F5",
+        ShowColorDropped: "#848484",
+        ShowColorInProgress: "#FFA726",
+        ShowColorCompleted: "#26A69A"
+      };
+      // dropped = 2
+       // in progress = 1
+       // completed 3
+  
+    // all other - ShowColorUpcoming
       const eventColor = {
-        backgroundColor: event ?.extendedProps ?.book ?.status==0?event.color:event ?.extendedProps ?.book ?.status==1?"green":event ?.extendedProps ?.book ?.status==2?'red':'orange',
+        backgroundColor: event ?.extendedProps ?.book ?.status==3?bookStatusColors.ShowColorCompleted:event ?.extendedProps ?.book ?.status==1?bookStatusColors.ShowColorInProgress:event ?.extendedProps ?.book ?.status==2?bookStatusColors.ShowColorDropped:bookStatusColors.ShowColorUpcoming,
       };
 
       // Fixing the number of lines for the event title makes this calculation easier.
@@ -414,19 +427,19 @@ this.setState({
             this.props.renderEvent(event)
           ) : (
               <View>
-                <Text numberOfLines={1} style={[styles.eventTitle,{color:event ?.extendedProps ?.book ?.status==0?'#615B73':"white"}]}>
+                <Text numberOfLines={1} style={[styles.eventTitle,{color:"white"}]}>
                   {event.title || 'Event'}
                 </Text>
                 {numberOfLines > 1 ? (
                   <Text
                     numberOfLines={numberOfLines - 1}
-                    style={[styles.eventSummary,{color:event ?.extendedProps ?.book ?.status==0?'#615B73':"white"}]}
+                    style={[styles.eventSummary,{color:"white"}]}
                   >
                     {event.summary || ' '}
                   </Text>
                 ) : null}
                 {numberOfLines > 2 ? (
-                  <Text style={[styles.eventTimes,{color:event ?.extendedProps ?.book ?.status==0?'#615B73':"white"}]} numberOfLines={1}>
+                  <Text style={[styles.eventTimes,{color:"white"}]} numberOfLines={1}>
                     {moment(event.start).format(formatTime)} -{' '}
                     {moment(event.end).format(formatTime)}
                   </Text>
@@ -496,18 +509,34 @@ this.setState({
     // });
 
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row',}}>
 
         {stylists.map((item, i) => (
 
-          <View style={{ flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0 }}>{this._getEvents(item.id)}</View>
+          <View style={{flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0 }}>{this._getEvents(item.id)}</View>
         ))}
 
 
       </View>
     );
   }
+  _renderVerticalLines() {
+    const { styles } = this.props;
+    const { packedEvents, stylists } = this.state;
+   
 
+    return (
+      <View style={{ flexDirection: 'row',}}>
+
+        {stylists.map((item, i) => (
+
+          <View style={{borderRightColor:"#70757A",borderRightWidth:.4,flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0 ,height:height*4,width:width/stylists.length}}></View>
+        ))}
+
+
+      </View>
+    );
+  }
   _getBlankEvents(stylistsID,stylists_name) {
 
   
@@ -612,11 +641,12 @@ this.setState({
         ]}
       >
        {/* {this._renderBlankEvents()} */}
+    
         {this._renderLines()}
         {this._renderEvents()}
         {this._renderRedLine()}
         {this._renderCurrentTimeLabels()}
-        
+        {this._renderVerticalLines()}
         
       </ScrollView>
     );
