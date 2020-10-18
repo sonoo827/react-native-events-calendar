@@ -123,9 +123,11 @@ alignItems:'center',}}
               //  this.props.onTodayTapped(date)
               if (initDate == currntdate) {
                 this.refs.calendar.scrollToIndex({ index: this.props.size, animated: true })
-
+                this.props.dateChanged(
+                  currntdate
+                );
               } else {
-                this.props.onTodayTapped(date)
+                this.props.onTodayTapped(currntdate)
 
 
               }

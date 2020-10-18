@@ -238,12 +238,12 @@ this.setState({
         style={[
           styles.lineNow,
           {
-            marginLeft:5,
+            marginLeft:3,
             height:2,
             top:
               offset * (timeNowHour - this.props.start) +
               (offset * timeNowMin) / 60,
-            width: width - 20,
+            width: width - 10,
           },
         ]}
       />
@@ -287,14 +287,14 @@ this.setState({
           {
             borderColor:'red',
             borderRadius:10,
-            marginLeft:5,
+            marginLeft:2,
             borderWidth:1,
             alignItems:'center',
    
             top:
               (offset * (timeNowHour - this.props.start) +
               (offset * timeNowMin) / 60)-8,
-            width:  48,
+            width:  49,
           },
         ]}
       >
@@ -303,7 +303,7 @@ this.setState({
           style={{ 
           
             color: 'red',
-            fontSize: 10,}}
+            fontSize: 9,}}
         >
           {timeText+":"+timeNowMin+" "+ampmText}
         </Text>
@@ -396,19 +396,11 @@ this.setState({
       };
 
 
-      bookStatusColors = {
-        ShowColorUpcoming: "#42A5F5",
-        ShowColorDropped: "#848484",
-        ShowColorInProgress: "#FFA726",
-        ShowColorCompleted: "#26A69A"
-      };
-      // dropped = 2
-       // in progress = 1
-       // completed 3
-  
-    // all other - ShowColorUpcoming
+    
       const eventColor = {
-        backgroundColor: event ?.extendedProps ?.book ?.status==3?bookStatusColors.ShowColorCompleted:event ?.extendedProps ?.book ?.status==1?bookStatusColors.ShowColorInProgress:event ?.extendedProps ?.book ?.status==2?bookStatusColors.ShowColorDropped:bookStatusColors.ShowColorUpcoming,
+       // backgroundColor: event ?.extendedProps ?.book ?.status==3?bookStatusColors.ShowColorCompleted:event ?.extendedProps ?.book ?.status==1?bookStatusColors.ShowColorInProgress:event ?.extendedProps ?.book ?.status==2?bookStatusColors.ShowColorDropped:bookStatusColors.ShowColorUpcoming,
+     
+       backgroundColor:event.backgroundColor,
       };
 
       // Fixing the number of lines for the event title makes this calculation easier.
@@ -522,7 +514,7 @@ this.setState({
   }
   _renderVerticalLines() {
     const { styles } = this.props;
-    const { packedEvents, stylists } = this.state;
+    const { stylists } = this.state;
    
 
     return (
@@ -530,7 +522,16 @@ this.setState({
 
         {stylists.map((item, i) => (
 
-          <View style={{borderRightColor:"#70757A",borderRightWidth:.4,flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0 ,height:height*4,width:width/stylists.length}}></View>
+          <View style={{
+           flex: 1, marginLeft: i == 0 ? LEFT_MARGIN : 0 ,}}>
+
+<View style={{width:1,
+ backgroundColor:'transparent',
+ height:height*4,
+       
+ borderRightColor:"#70757A",borderRightWidth:.4,}}></View>
+
+           </View>
         ))}
 
 
@@ -643,10 +644,12 @@ this.setState({
        {/* {this._renderBlankEvents()} */}
     
         {this._renderLines()}
-        {this._renderEvents()}
         {this._renderRedLine()}
         {this._renderCurrentTimeLabels()}
+        {this._renderEvents()}
         {this._renderVerticalLines()}
+      
+      
         
       </ScrollView>
     );
