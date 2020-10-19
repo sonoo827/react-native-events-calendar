@@ -411,7 +411,7 @@ this.setState({
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() =>
-            this._onEventTapped(this.props.events[event.index])
+            this._onEventTapped(event)
           }
           key={i} style={[styles.event, style,  eventColor]}
         >
