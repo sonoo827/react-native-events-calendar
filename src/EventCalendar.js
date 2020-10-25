@@ -20,7 +20,7 @@ export default class EventCalendar extends React.Component {
   constructor(props) {
     super(props);
 
-    const start = props.start ? props.start : 0;
+    const start = props.start ? props.start :0;
     const end = props.end ? props.end : 24;
 
     this.styles = styleConstructor(props.styles, (end - start) * 100);
@@ -126,9 +126,11 @@ alignItems:'center',}}
                 this.props.dateChanged(
                   currntdate
                 );
+             
               } else {
+               
                 this.props.onTodayTapped(currntdate)
-
+            
 
               }
 
@@ -330,3 +332,5 @@ alignItems:'center',}}
     );
   }
 }
+
+

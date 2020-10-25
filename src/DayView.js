@@ -198,10 +198,11 @@ export default class DayView extends React.PureComponent {
       stylists: nextProps.stylists,
       packedEvents: populateEvents(nextProps.events, width, nextProps.start),
     });
+    this.scrollToFirst();
   }
 
   componentDidMount() {
-     this.scrollToFirst();
+     //this.scrollToFirst();
   }
 
   scrollToFirst() {
