@@ -35,6 +35,7 @@ export default class DayView extends React.PureComponent {
     initPosition = initPosition < 0 ? 0 : initPosition;
     this.state = {
       _scrollY: initPosition,
+      isScoll:true,
       packedEvents,
       stylists: [],
       blankEvents:[
@@ -198,11 +199,15 @@ export default class DayView extends React.PureComponent {
       stylists: nextProps.stylists,
       packedEvents: populateEvents(nextProps.events, width, nextProps.start),
     });
-    this.scrollToFirst();
+
+  // if(this.state.packedEvents ?.length>0&&this.state.isScoll&&this.props.isScrolltoCurrentTime){
+  //   this.scrollToFirst();
+  // }
+    
   }
 
   componentDidMount() {
-     //this.scrollToFirst();
+     this.scrollToFirst();
   }
 
   scrollToFirst() {
@@ -212,9 +217,10 @@ export default class DayView extends React.PureComponent {
           x: 0,
           y: this.state._scrollY,
           animated: true,
+          isScoll:false
         });
       }
-    }, 1);
+    }, 1100);
   }
 
   _renderRedLine() {

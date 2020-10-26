@@ -79,7 +79,8 @@ export default class EventCalendar extends React.Component {
       end = 24,
       formatHeader,
       upperCaseHeader = false,
-      stylists
+      stylists,
+   
     } = this.props;
     const date = moment(initDate).add(index - this.props.size, 'days');
     indexss = date;
@@ -233,6 +234,7 @@ alignItems:'center',}}
           scrollToFirst={scrollToFirst}
           start={start}
           end={end}
+        
 
         />
       </View>
