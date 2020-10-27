@@ -312,8 +312,9 @@ alignItems:'center',}}
           getItem={this._getItem.bind(this)}
           keyExtractor={(item, index) => index.toString()}
           getItemLayout={this._getItemLayout.bind(this)}
-          horizontal
-          pagingEnabled
+          horizontal={true}
+          scrollEnabled={false}
+          pagingEnabled={true}
           renderItem={this._renderItem.bind(this)}
           style={{ width: width }}
           onMomentumScrollEnd={event => {
