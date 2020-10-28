@@ -19,11 +19,11 @@ function range(from, to) {
 
 var itemWidth = 0;
 var start;
-
+var calendarHeight=0;
 export default class DayView extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.calendarHeight = (props.end - props.start) * 100;
+    calendarHeight = (props.end - props.start) * 100;
 
     const width = (props.width - LEFT_MARGIN) / props.stylists.length;
     itemWidth = width;
@@ -31,7 +31,7 @@ export default class DayView extends React.PureComponent {
     const packedEvents = populateEvents(props.events, width, props.start);
     let initPosition =
       _.min(_.map(packedEvents, 'top')) -
-      this.calendarHeight / (props.end - props.start);
+      calendarHeight / (props.end - props.start);
     initPosition = initPosition < 0 ? 0 : initPosition;
     this.state = {
       _scrollY: initPosition,
@@ -45,141 +45,8 @@ export default class DayView extends React.PureComponent {
           title: 'Engg Expo 2019',
           summary: 'Expoo Vanue not confirm',
         },
-        {
-          start: '2020-10-11 01:00:00',
-          end: '2020-10-11 02:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 02:00:00',
-          end: '2020-10-11 03:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-
-        {
-          start: '2020-10-11 03:00:00',
-          end: '2020-10-11 04:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-               {
-          start: '2020-10-11 04:00:00',
-          end: '2020-10-11 05:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 05:00:00',
-          end: '2020-10-11 06:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 06:00:00',
-          end: '2020-10-11 07:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 07:00:00',
-          end: '2020-10-11 08:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 08:00:00',
-          end: '2020-10-11 09:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 09:00:00',
-          end: '2020-10-11 10:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 10:00:00',
-          end: '2020-10-11 11:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 11:00:00',
-          end: '2020-10-11 12:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 12:00:00',
-          end: '2020-10-11 13:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 13:00:00',
-          end: '2020-10-11 14:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 14:00:00',
-          end: '2020-10-11 15:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 15:00:00',
-          end: '2020-10-11 16:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 16:00:00',
-          end: '2020-10-11 17:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 17:00:00',
-          end: '2020-10-11 18:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 18:00:00',
-          end: '2020-10-11 19:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 19:00:00',
-          end: '2020-10-11 20:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-
-
-        {
-          start: '2020-10-11 20:00:00',
-          end: '2020-10-11 21:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 21:00:00',
-          end: '2020-10-11 22:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
-        {
-          start: '2020-10-11 22:00:00',
-          end: '2020-10-11 23:00:00',
-          title: 'Engg Expo 2019',
-          summary: 'Expoo Vanue not confirm',
-        },
+       
+        
         {
           start: '2020-10-11 23:00:00',
           end: '2020-10-11 24:00:00',
@@ -192,12 +59,23 @@ export default class DayView extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+
+    calendarHeight = (nextProps.end - nextProps.start) * 100;
+   // console.log("calendarHeight", calendarHeight);
+    const packedEvents = populateEvents(nextProps.events, width, nextProps.start);
+    let initPosition =
+    _.min(_.map(packedEvents, 'top')) -
+    calendarHeight / (nextProps.end - nextProps.start);
+  initPosition = initPosition < 0 ? 0 : initPosition;
+
+
     const width = (nextProps.width - LEFT_MARGIN) / nextProps.stylists.length;
     itemWidth = width;
 
     this.setState({
+      _scrollY: initPosition,
       stylists: nextProps.stylists,
-      packedEvents: populateEvents(nextProps.events, width, nextProps.start),
+      packedEvents: packedEvents,
     });
 
   // if(this.state.packedEvents ?.length>0&&this.state.isScoll&&this.props.isScrolltoCurrentTime){
@@ -220,7 +98,7 @@ export default class DayView extends React.PureComponent {
           isScoll:false
         });
       }
-    }, 1100);
+    }, 1);
   }
 
   _renderRedLine() {
@@ -320,7 +198,7 @@ this.setState({
 
   _renderLines() {
     const { format24h, start, end } = this.props;
-    const offset = this.calendarHeight / (end - start);
+    const offset = calendarHeight / (end - start);
 
     return range(start, end + 1).map((i, index) => {
       let timeText;
@@ -362,7 +240,7 @@ this.setState({
 
   _renderTimeLabels() {
     const { styles, start, end } = this.props;
-    const offset = this.calendarHeight / (end - start);
+    const offset = calendarHeight / (end - start);
     return range(start, end).map((item, i) => {
       return (
         <View key={`line${i}`} style={[styles.line, { top: offset * i }]} />
@@ -645,7 +523,7 @@ this.setState({
         ref={ref => (this._scrollView = ref)}
         contentContainerStyle={[
           styles.contentStyle,
-          { width: this.props.width },
+          { width: this.props.width,height:calendarHeight+50 },
         ]}
       >
        {/* {this._renderBlankEvents()} */}

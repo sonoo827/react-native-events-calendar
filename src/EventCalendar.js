@@ -20,7 +20,7 @@ export default class EventCalendar extends React.Component {
   constructor(props) {
     super(props);
 
-    const start = props.start ? props.start :0;
+    const start = props.start ? props.start : 0;
     const end = props.end ? props.end : 24;
 
     this.styles = styleConstructor(props.styles, (end - start) * 100);
@@ -30,6 +30,24 @@ export default class EventCalendar extends React.Component {
     };
   }
 
+
+  componentWillReceiveProps(nextProps) {
+
+    // console.log("nextProps.initDate", nextProps.initDate);
+    // console.log("this.prcomponentWillReceivePropsops.initDate", this.props.initDate+"   >>>size"+this.props.size +" ?????"+this.state.index );
+    if (this.state.index == this.props.size) {
+      this.setState({
+        date: moment(nextProps.initDate),
+      })
+    }
+    console.log("nextProps", this.props.initDate + "   >>>size" + this.props.size + " ?????" + this.state.index
+      + " date??" +  moment(this.state.date)
+        
+      .format('YYYY-MM-DD'));
+    if (this.props.onRef) {
+      this.props.onRef(this);
+    }
+  }
   componentDidMount() {
     if (this.props.onRef) {
       this.props.onRef(this);
@@ -80,8 +98,10 @@ export default class EventCalendar extends React.Component {
       formatHeader,
       upperCaseHeader = false,
       stylists,
-   
+
     } = this.props;
+
+  
     const date = moment(initDate).add(index - this.props.size, 'days');
     indexss = date;
     const leftIcon = this.props.headerIconLeft ? (
@@ -94,48 +114,66 @@ export default class EventCalendar extends React.Component {
     ) : (
         <Image source={require('./forward.png')} style={this.styles.arrow} />
       );
+      let headerText="";
+      var weekdayName="";
+      var arrayOfWeekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      if(this.state.index == this.props.size){
+        headerText = upperCaseHeader
+        ? this.state.date.format('DD-MM-YYYY').toUpperCase()
+        : this.state.date.format('DD-MM-YYYY');
+  
+  
+      var dateObj = new Date(this.state.date)
+      var weekdayNumber = dateObj.getDay()
+       weekdayName = arrayOfWeekdays[weekdayNumber]
 
-    let headerText = upperCaseHeader
-      ? date.format('DD-MM-YYYY').toUpperCase()
-      : date.format('DD-MM-YYYY');
-    var arrayOfWeekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      }else{
+        headerText = upperCaseHeader
+        ? date.format('DD-MM-YYYY').toUpperCase()
+        : date.format('DD-MM-YYYY');
+  
+  
+      var dateObj = new Date(date)
+      var weekdayNumber = dateObj.getDay()
+       weekdayName = arrayOfWeekdays[weekdayNumber]
+      }
 
-    var dateObj = new Date(date)
-    var weekdayNumber = dateObj.getDay()
-    var weekdayName = arrayOfWeekdays[weekdayNumber]
-    // alert(headerText)
     return (
       <View style={[this.styles.container, { width }]}>
         <View style={this.styles.header}>
           <TouchableOpacity
 
-style={{  borderColor:'#70757A',
-borderRadius:10,
-marginRight:2,
-paddingHorizontal:5,
-paddingVertical:1,
-borderWidth:1,
-alignItems:'center',}}
-            onPress={() => {
+            style={{
+              borderColor: '#70757A',
+              borderRadius: 10,
+              marginRight: 2,
+              paddingHorizontal: 5,
+              paddingVertical: 1,
+              borderWidth: 1,
+              alignItems: 'center',
+            }}
+            onPress={() =>  {
 
-              var initDate = moment(this.props.initDate)
+              var initDate =  moment(this.props.initDate)
                 .format('YYYY-MM-DD')
-              var currntdate = moment(new Date).format('YYYY-MM-DD');
-              //  this.props.onTodayTapped(date)
-              if (initDate == currntdate) {
-                this.refs.calendar.scrollToIndex({ index: this.props.size, animated: true })
-                this.props.dateChanged(
-                  currntdate
-                );
-             
-              } else {
-               
-                this.props.onTodayTapped(currntdate)
+              var currntdate =  moment(new Date).format('YYYY-MM-DD');
             
+              if (initDate == currntdate) {
+                this.setState({
+                  index: this.props.size,
+                  date:moment(currntdate)
+                });
+                this._goToDate(currntdate)
+               
 
+              } else {
+              
+                this.setState({
+                  index: this.props.size,
+                  date:moment(currntdate)
+                });
+                this.props.onTodayTapped(currntdate)
               }
-
-
 
             }}
           >
@@ -151,9 +189,8 @@ alignItems:'center',}}
           <TouchableOpacity
             style={this.styles.headerTextContainer}
             onPress={() => {
-              this.props.onDateTapped(headerText)
-
-              // this._goToDate('2020-12-30')
+               this.props.onDateTapped(headerText)
+             
             }}
 
           >
@@ -234,7 +271,7 @@ alignItems:'center',}}
           scrollToFirst={scrollToFirst}
           start={start}
           end={end}
-        
+
 
         />
       </View>
@@ -242,6 +279,7 @@ alignItems:'center',}}
   }
 
   _goToPage(index) {
+
     if (index <= 0 || index >= this.props.size * 2) {
       return;
     }
@@ -260,8 +298,31 @@ alignItems:'center',}}
     );
     const index = moment(date).diff(earliestDate, 'days');
     this._goToPage(index);
+
+    if (this.props.dateChanged) {
+      this.props.dateChanged(
+        moment(this.props.initDate)
+          .format('YYYY-MM-DD')
+      );
+    }
   }
 
+     _initDate () {
+  
+
+
+    const index = this.props.size;
+    const date = moment(this.props.initDate).add(
+      index - this.props.size,
+      'days'
+    );
+    this.setState({
+      index, date
+    }, () => {
+      
+
+    });
+  }
   _previous = () => {
     this._goToPage(this.state.index - 1);
     if (this.props.dateChanged) {
@@ -296,6 +357,10 @@ alignItems:'center',}}
       stylists
 
     } = this.props;
+
+    console.log("render>>", this.props.initDate + "   >>>size" + this.props.size + " ?????" + this.state.index
+    + " date" + moment(this.state.date).format('YYYY-MM-DD'));
+
 
     return (
       <View style={[this.styles.container, { width }]}>
